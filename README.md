@@ -7,21 +7,108 @@ Fork and clone this repo. On your fork, answer and commit the follow questions. 
 
 a) Define an enumeration called `iOSDeviceType` with member values `iPhone`, `iPad`, `iWatch`. Create a variable called `myDevice` and assign it one member value.
 
+enum iOSDeviceType {
+case iPhone
+case iPad
+case iWatch
+}
+var myDevice: iOSDeviceType =  iOSDeviceType.iPhone
+print(myDevice)
+
 b) Adjust your code above so that `iPhone` and `iPad` have associated values of type String which represents the model number, eg: `iPhone("6 Plus")`. Use a switch case and let syntax to print out the model number of each device.
+
+enum iOSDeviceType {
+case iPhone(String)
+case iPad(String)
+case iWatch(Int)
+}
+let myDevice = iOSDeviceType.iPhone("8+")
+
+switch myDevice {
+case  .iPhone(let modelType):
+print("This is an iPhone \(modelType)")
+case .iPad(let modelType):
+print("This is an iPad \(modelType)")
+case .iWatch(let verisonType):
+print("This is an iWatch \(verisonType)")
+
+}
+
 
 
 ## Question 2
 
 a) Write an enum called `Shape` and give it cases for `triangle`, `rectangle`, `square`, `pentagon`, and `hexagon`.
 
+enum shape {
+case triangle
+case rectangle
+case pentagon
+case hexagon
+}
+
 b) Write a method inside `Shape` that returns how many sides the shape has. Create a variable called `myFavoritePolygon` and assign it to one of the shapes above, then print out how many sides it has.
+
+enum shape: String{
+case triangle = "3 sides"
+case rectangle = " 4 sides"
+case pentagon = "5 sides"
+case hexagon = "6 sides"
+}
+var myFavoritePolygon = shape.triangle
+
+var mySides = (myFavoritePolygon).rawValue
+print(mySides)
 
 c) Re-write `Shape` so that each case has an associated value of type Int that will represent the length of the sides (assume the shapes are regular polygons so all the sides are the same length) and write a method inside that returns the perimeter of the shape.
 
+enum shape: Int{
+case triangle = 3
+case rectangle = 4
+case square = 8
+case pentagon = 5
+case hexagon = 6
+}
+let perimiter = shape.init(rawValue: 3)
+var triangle = shape.triangle.rawValue * 3
+var square = shape.square.rawValue * 4
+var pentagon = shape.pentagon.rawValue * 5
+var hexagon = shape.hexagon.rawValue * 6
+
+switch perimiter! {
+case .triangle:
+print(triangle)
+case . square:
+print(square)
+case .pentagon:
+print(pentagon)
+case .hexagon:
+print(hexagon)
+default:
+print()
+}
 
 ## Question 3
 
 Write an enum called `OperatingSystem` and give it cases for `windows`, `mac`, and `linux`. Create an array of 10 `OperatingSystem` objects where each one is set to a random operating system. Then, iterate through the array and print out a message depending on the operating system.
+
+enum OperatingSystem {
+case windows
+case linux
+case mac
+
+}
+var OS = [OperatingSystem.windows,OperatingSystem.mac,OperatingSystem.linux,OperatingSystem.windows,OperatingSystem.windows,OperatingSystem.mac,OperatingSystem.mac,OperatingSystem.linux,OperatingSystem.linux,OperatingSystem.linux]
+for i in OS {
+switch i {
+case .windows:
+print("Bill Gates")
+case .mac:
+print("Steve Jobs")
+case .linux:
+print("Who")
+}
+}
 
 
 ## Question 4
@@ -47,6 +134,29 @@ var steps: [Direction] = [.up, .up, .left, .down, .left]
 
 // your code here
 ```
+enum Direction {
+case up
+case down
+case left
+case right
+}
+var location = (x:0, y:0)
+var steps:[Direction] = [.up, .up , .left, .down, .left]
+for direction in steps {
+print("The currect location is at x: \(location.x) and y: \(location.y)")
+print("I am about to go \(direction)")
+switch direction {
+case .up:
+location.y += 1
+case .down:
+location.y -= 1
+case .left:
+location.x -= 1
+case .right:
+location.x += 1
+}
+}
+print("the final location is \(location)")
 
 
 ## Question 5
@@ -58,6 +168,39 @@ b) Define an enumeration named `MatchResult` with three members: `.win`, `.draw`
 c) Write a function called `match` that takes two `HandShapes` and returns a `MatchResult`. It should return the outcome for the first player (the one with the first hand shape).
 
 Hint: Rock beats scissors, paper beats rock, scissor beats paper
+
+enum HandShape {
+case rock
+case paper
+case sccisors
+}
+enum matchResults {
+case win
+case draw
+case lose
+}
+func match(firstShape :HandShape, secondShape :HandShape) -> matchResults {
+switch firstShape {
+case .rock:
+switch secondShape {
+case .rock: return .draw
+case . paper: return .lose
+case .sccisors: return .lose
+}
+case.paper:
+switch secondShape {
+case .rock: return .win
+case .paper: return .draw
+case .sccisors: return .lose
+}
+case.sccisors:
+switch secondShape {
+case .rock: return .lose
+case .paper: return .win
+case .sccisors: return .draw
+}
+}
+}
 
 
 ## Question 6
@@ -89,11 +232,58 @@ b) Write a method in the `CoinType` enum that returns an Int representing how ma
 
 a) Write an enum called `DayOfWeek` to represent the days of the week with a raw value of type String.
 
+enum DayOfWeek: String {
+case sunday = "sunday"
+case monday = "monday"
+case tuesday = "tuesday"
+case wednesday = "wensday"
+case thursday = "thursday"
+case friday = "friday"
+case saturday = "saturday"
+
+}
+
 b) Given the array `poorlyFormattedDays`, write code that will produce an array of enums that match the days.
 
 `let poorlyFormattedDays = ["MONDAY", "wednesday", "Sunday", "monday", "Tuesday", "WEDNESDAY", "thursday", "SATURDAY", "tuesday", "FRIDAy", "Wednesday", "Monday", "Friday", "sunday"]`
 
 c) Write a method in `DayOfWeek` called `isWeekend` that determines whether a day is part of the weekend or not and write code to calculate how many week days appear in `poorlyFormattedDays`.
+
+enum DayOfWeek {
+case sunday
+case monday
+case tuesday
+case wednesday
+case thursday
+case friday
+case saturday
+
+}
+func dayType(isWeekend: DayOfWeek) -> String {
+
+switch isWeekend {
+case .saturday:
+return "Weekend"
+case .sunday:
+return "Weekend"
+case .monday:
+return "Weekday"
+case .tuesday:
+return "Weekday"
+case .wednesday:
+return "Weekday"
+case .thursday:
+return "Weekday"
+case .friday:
+return "Weekday"
+}
+}
+
+let Monday = DayOfWeek.monday
+
+let result1 = dayType(isWeekend: Monday)
+print(result1)
+
 
 
 ## Question 8
